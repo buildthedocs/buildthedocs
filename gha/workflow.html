@@ -1,0 +1,273 @@
+
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>GitHub Action workflow &mdash; Build The Docs  documentation</title>
+  
+
+  
+  <link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+
+  
+  
+  
+  
+
+  
+  <!--[if lt IE 9]>
+    <script src="../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+    
+      <script type="text/javascript" id="documentation_options" data-url_root="../" src="../_static/documentation_options.js"></script>
+        <script src="../_static/jquery.js"></script>
+        <script src="../_static/underscore.js"></script>
+        <script src="../_static/doctools.js"></script>
+        <script src="../_static/language_data.js"></script>
+    
+    <script type="text/javascript" src="../_static/js/theme.js"></script>
+
+    
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="Examples" href="examples.html" />
+    <link rel="prev" title="Docker GitHub Action" href="action.html" /> 
+</head>
+
+<body class="wy-body-for-nav">
+
+   
+  <div class="wy-grid-for-nav">
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+          
+
+          
+            <a href="../index.html" class="icon icon-home"> Build The Docs
+          
+
+          
+          </a>
+
+          
+            
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <p class="caption"><span class="caption-text">Command-Line Interface</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../cli/usage.html">Usage</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../cli/themes.html">Supported themes</a></li>
+</ul>
+<p class="caption"><span class="caption-text">GitHub Actions</span></p>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="action.html">Docker GitHub Action</a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href="#">GitHub Action workflow</a></li>
+<li class="toctree-l1"><a class="reference internal" href="examples.html">Examples</a></li>
+</ul>
+
+            
+          
+        </div>
+        
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../index.html">Build The Docs</a>
+        
+      </nav>
+
+
+      <div class="wy-nav-content">
+        
+        <div class="rst-content">
+        
+          
+            
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="../index.html" class="icon icon-home"></a> &raquo;</li>
+        
+      <li>GitHub Action workflow</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+          
+            
+              <a href="https://github.com/buildthedocs/btd/blob/master/doc/gha/workflow.rst" class="fa fa-github"> Edit on GitHub</a>
+            
+          
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <div class="section" id="github-action-workflow">
+<span id="btd-workflow"></span><h1>GitHub Action workflow<a class="headerlink" href="#github-action-workflow" title="Permalink to this headline">¶</a></h1>
+<p>The following YAML snippet is a minimal GitHub Actions workflow. Enable BTD in a repository by copying it to <code class="docutils literal notranslate"><span class="pre">.github/workflows/</span></code>.</p>
+<div class="highlight-yaml notranslate"><div class="highlight"><pre><span></span><span class="nt">name</span><span class="p">:</span> <span class="s">&#39;doc&#39;</span>
+
+<span class="nt">on</span><span class="p">:</span>
+  <span class="nt">push</span><span class="p">:</span>
+
+<span class="nt">jobs</span><span class="p">:</span>
+
+  <span class="nt">linux</span><span class="p">:</span>
+    <span class="nt">runs-on</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">ubuntu-latest</span>
+    <span class="nt">steps</span><span class="p">:</span>
+
+    <span class="p p-Indicator">-</span> <span class="nt">uses</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">actions/checkout@v2</span>
+
+    <span class="p p-Indicator">-</span> <span class="nt">uses</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">buildthedocs/btd@v0</span>
+      <span class="nt">with</span><span class="p">:</span>
+        <span class="nt">token</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">${{ github.token }}</span>
+
+    <span class="p p-Indicator">-</span> <span class="nt">uses</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">actions/upload-artifact@v2</span>
+      <span class="nt">with</span><span class="p">:</span>
+        <span class="nt">name</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">source</span>
+        <span class="nt">path</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">source/_build/html</span>
+</pre></div>
+</div>
+<p>Since the (optional) <code class="docutils literal notranslate"><span class="pre">token</span></code> is provided, BTD will automatically upload the documentation to branch <code class="docutils literal notranslate"><span class="pre">gh-pages</span></code> (or the
+target specified in <a class="reference external" href="https://github.com/buildthedocs/btd/blob/master/.btd.yml">.btd.yml</a>). Then, it will be available at <code class="docutils literal notranslate"><span class="pre">https://USERNAME.github.io/REPOSITORY</span></code>.</p>
+<p>Using <code class="docutils literal notranslate"><span class="pre">actions/upload-artifact</span></code> is optional too. As the name implies, it uploads the results of the workflow as a zipfile.
+This might be useful for testing purposes, or in PRs. That is, for building the documentation in CI and checking the results,
+without overwriting the <em>production</em> site.</p>
+<div class="admonition important">
+<p class="admonition-title">Important</p>
+<p>If branch <code class="docutils literal notranslate"><span class="pre">gh-pages</span></code> does not exist and GitHub Actions creates it, the publication won’t be triggered.
+An owner of the repository needs to push to the branch, once at least, for publication to be enabled. Further updates
+by GitHub Actions will be properly picked.</p>
+<p>Some users might want to create branch <code class="docutils literal notranslate"><span class="pre">gh-pages</span></code> (with some dummy content), before using BTD for the first time. Others
+might use the following snippet for reseting the author:</p>
+<div class="highlight-shell notranslate"><div class="highlight"><pre><span></span>git checkout -b gh-pages origin/gh-pages
+git commit --amend --reset-author
+git push origin +gh-pages
+</pre></div>
+</div>
+</div>
+<div class="admonition important">
+<p class="admonition-title">Important</p>
+<p>BTD will always create a branch with a single commit and then overwrite any existing content in <code class="docutils literal notranslate"><span class="pre">gh-pages</span></code>
+(by force-pushing). In <a class="reference internal" href="examples.html#btd-examples"><span class="std std-ref">Examples</span></a> there are references about how to add content to the site, before running BTD.</p>
+</div>
+</div>
+
+
+           </div>
+           
+          </div>
+          <footer>
+  
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+      
+        <a href="examples.html" class="btn btn-neutral float-right" title="Examples" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
+      
+      
+        <a href="action.html" class="btn btn-neutral float-left" title="Docker GitHub Action" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+      
+    </div>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        
+        &copy; Copyright 2018-2020, BTD contributors
+
+    </p>
+  </div>
+    
+    
+    
+    Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a
+    
+    <a href="https://github.com/buildthedocs/sphinx.theme">theme</a>
+    
+    provided by <a href="https://buildthedocs.github.io">Build the Docs</a>. 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script>
+
+  
+  
+    
+   
+
+</body>
+</html>
